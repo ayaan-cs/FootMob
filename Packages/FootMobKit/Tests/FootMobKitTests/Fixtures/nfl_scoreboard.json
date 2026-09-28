@@ -1,0 +1,85 @@
+{
+  "leagues": [
+    {
+      "calendar": [
+        {
+          "label": "Regular Season",
+          "value": "2",
+          "entries": [
+            { "label": "Week 3", "value": "3", "startDate": "2026-09-23T07:00Z", "endDate": "2026-09-30T06:59Z" },
+            { "label": "Week 4", "value": "4", "startDate": "2026-09-30T07:00Z", "endDate": "2026-10-07T06:59Z" }
+          ]
+        }
+      ]
+    }
+  ],
+  "season": { "type": 2, "year": 2026 },
+  "week": { "number": 3 },
+  "events": [
+    {
+      "id": "401773001",
+      "date": "2026-09-27T17:00Z",
+      "name": "Buffalo Bills at Kansas City Chiefs",
+      "shortName": "BUF @ KC",
+      "season": { "year": 2026, "type": 2 },
+      "week": { "number": 3 },
+      "competitions": [
+        {
+          "id": "401773001",
+          "date": "2026-09-27T17:00Z",
+          "venue": { "fullName": "GEHA Field at Arrowhead Stadium", "address": { "city": "Kansas City", "state": "MO" } },
+          "competitors": [
+            {
+              "id": "12", "homeAway": "home", "score": "20",
+              "team": { "id": "12", "abbreviation": "KC", "displayName": "Kansas City Chiefs", "shortDisplayName": "Chiefs",
+                        "name": "Chiefs", "location": "Kansas City", "color": "e31837", "alternateColor": "ffb612",
+                        "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/kc.png" },
+              "linescores": [{ "value": 3.0 }, { "value": 10.0 }, { "value": 7.0 }],
+              "records": [{ "name": "overall", "type": "total", "summary": "2-0" }]
+            },
+            {
+              "id": "2", "homeAway": "away", "score": "17",
+              "team": { "id": "2", "abbreviation": "BUF", "displayName": "Buffalo Bills", "shortDisplayName": "Bills",
+                        "name": "Bills", "location": "Buffalo", "color": "00338d", "alternateColor": "d50a0a",
+                        "logo": "https://a.espncdn.com/i/teamlogos/nfl/500/buf.png" },
+              "linescores": [{ "value": 7.0 }, { "value": 3.0 }, { "value": 7.0 }],
+              "records": [{ "name": "overall", "type": "total", "summary": "2-0" }]
+            }
+          ],
+          "status": {
+            "clock": 501.0, "displayClock": "8:21", "period": 3,
+            "type": { "name": "STATUS_IN_PROGRESS", "state": "in", "completed": false, "detail": "8:21 - 3rd Quarter", "shortDetail": "8:21 - 3rd" }
+          },
+          "situation": {
+            "down": 2, "distance": 7, "yardLine": 66, "downDistanceText": "2nd & 7 at KC 34",
+            "shortDownDistanceText": "2nd & 7", "possessionText": "KC 34", "possession": "2",
+            "isRedZone": false, "homeTimeouts": 3, "awayTimeouts": 2,
+            "lastPlay": { "text": "J.Allen pass short right to K.Coleman for 9 yards." }
+          },
+          "broadcasts": [{ "market": "national", "names": ["CBS"] }],
+          "odds": [{ "details": "KC -2.5", "overUnder": 48.5 }]
+        }
+      ],
+      "status": {
+        "clock": 501.0, "displayClock": "8:21", "period": 3,
+        "type": { "name": "STATUS_IN_PROGRESS", "state": "in", "completed": false, "detail": "8:21 - 3rd Quarter", "shortDetail": "8:21 - 3rd" }
+      }
+    },
+    {
+      "id": "401773002",
+      "date": "2026-09-28T00:20Z",
+      "name": "Dallas Cowboys at Philadelphia Eagles",
+      "shortName": "DAL @ PHI",
+      "competitions": [
+        {
+          "competitors": [
+            { "homeAway": "home", "score": "0", "team": { "id": 21, "abbreviation": "PHI", "displayName": "Philadelphia Eagles" } },
+            { "homeAway": "away", "score": "0", "team": { "id": 6, "abbreviation": "DAL", "displayName": "Dallas Cowboys" } },
+            { "homeAway": "neutral", "team": "malformed" }
+          ],
+          "status": { "period": 0, "type": { "name": "STATUS_SCHEDULED", "state": "pre", "shortDetail": "9/27 - 8:20 PM EDT" } }
+        }
+      ]
+    }
+  ]
+}
