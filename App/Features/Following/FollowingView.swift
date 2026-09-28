@@ -4,7 +4,7 @@ import FootMobKit
 struct FollowingView: View {
     @Environment(AppModel.self) private var model
     @State private var showingPicker = false
-    @State private var showingAbout = false
+    @State private var showingSettings = false
 
     private let columns = [GridItem(.adaptive(minimum: 150), spacing: 12)]
 
@@ -38,10 +38,11 @@ struct FollowingView: View {
                 .padding()
             }
         }
+        .appBackground()
         .navigationTitle("Following")
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Button("About & Credits", systemImage: "info.circle") { showingAbout = true }
+                Button("Settings", systemImage: "gearshape") { showingSettings = true }
             }
             ToolbarItem(placement: .topBarTrailing) {
                 Button("Edit Teams", systemImage: "plus") { showingPicker = true }
@@ -50,8 +51,8 @@ struct FollowingView: View {
         .sheet(isPresented: $showingPicker) {
             TeamPickerView()
         }
-        .sheet(isPresented: $showingAbout) {
-            AboutView()
+        .sheet(isPresented: $showingSettings) {
+            SettingsView()
         }
     }
 }
@@ -59,6 +60,7 @@ struct FollowingView: View {
 struct FavoriteTeamTile: View {
     let team: Team
     @Environment(AppModel.self) private var model
+    @Environment(\.colorScheme) private var scheme
 
     var body: some View {
         let game = GamePrioritizer.featured(for: team.id, in: model.latestGames[team.league] ?? [])
@@ -89,7 +91,7 @@ struct FavoriteTeamTile: View {
             }
         }
         .padding(14)
-        .glassEffect(.regular.tint(team.primaryColor.opacity(0.35)).interactive(), in: .rect(cornerRadius: 24))
+        .glassEffect(.regular.tint(team.color(for: scheme).opacity(0.35)).interactive(), in: .rect(cornerRadius: 24))
     }
 }
 
@@ -127,6 +129,7 @@ struct TeamPickerView: View {
                 }
             }
             .searchable(text: $query, prompt: "Search teams")
+            .appBackground()
             .navigationTitle("Follow Teams")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -182,6 +185,7 @@ struct TeamView: View {
                 ProgressView().padding(.top, 80)
             }
         }
+        .appBackground()
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             if let team {

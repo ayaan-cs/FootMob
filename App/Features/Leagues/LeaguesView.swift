@@ -28,6 +28,7 @@ struct LeaguesView: View {
             }
             .padding()
         }
+        .appBackground()
         .navigationTitle("Leagues")
     }
 }
@@ -74,6 +75,7 @@ struct LeagueView: View {
             }
             .padding()
         }
+        .appBackground()
         .navigationTitle(league.displayName)
         .task { await loadStandings() }
         .refreshable { await loadStandings() }
@@ -112,6 +114,7 @@ struct LeagueScheduleView: View {
 struct StandingsList: View {
     let groups: [StandingsGroup]
     var highlighted: Set<String> = []
+    @Environment(\.colorScheme) private var scheme
 
     var body: some View {
         if groups.isEmpty {
@@ -168,7 +171,7 @@ struct StandingsList: View {
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 8)
-        .background(isHighlighted ? entry.team.primaryColor.opacity(0.18) : .clear)
+        .background(isHighlighted ? entry.team.color(for: scheme).opacity(0.22) : .clear)
         .contentShape(.rect)
     }
 

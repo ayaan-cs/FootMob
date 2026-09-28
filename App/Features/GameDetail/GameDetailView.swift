@@ -61,6 +61,7 @@ struct GameDetailView: View {
                 content(detail)
             }
         }
+        .appBackground()
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             if let game = viewModel.game, !game.status.isFinal {
@@ -331,6 +332,7 @@ struct SummaryTab: View {
 struct ScoringPlayRow: View {
     let play: ScoringPlay
     let game: Game
+    @Environment(\.colorScheme) private var scheme
 
     var body: some View {
         let team = [game.away.team, game.home.team].first { $0.id == play.teamKey }
@@ -341,7 +343,7 @@ struct ScoringPlayRow: View {
                     Text(play.typeAbbreviation.isEmpty ? play.typeText : play.typeAbbreviation)
                         .font(.caption.weight(.heavy))
                         .padding(.horizontal, 6).padding(.vertical, 2)
-                        .background(team?.primaryColor.opacity(0.2) ?? .gray.opacity(0.2), in: .capsule)
+                        .background(team.map { $0.color(for: scheme).opacity(0.25) } ?? .gray.opacity(0.2), in: .capsule)
                     Text("Q\(play.period) · \(play.clock)").font(.caption).foregroundStyle(.secondary)
                 }
                 Text(play.text).font(.subheadline)
@@ -355,6 +357,7 @@ struct ScoringPlayRow: View {
 struct WinProbabilityCard: View {
     let game: Game
     let points: [WinProbabilityPoint]
+    @Environment(\.colorScheme) private var scheme
 
     var body: some View {
         let latest = points.last?.homeWinProbability ?? 0.5
@@ -375,8 +378,8 @@ struct WinProbabilityCard: View {
                     ForEach(points) { point in
                         AreaMark(x: .value("Play", point.index), y: .value("Home", point.homeWinProbability))
                             .foregroundStyle(
-                                LinearGradient(colors: [game.home.team.primaryColor.opacity(0.4),
-                                                        game.away.team.primaryColor.opacity(0.4)],
+                                LinearGradient(colors: [game.home.team.color(for: scheme).opacity(0.4),
+                                                        game.away.team.color(for: scheme).opacity(0.4)],
                                                startPoint: .top, endPoint: .bottom)
                             )
                             .interpolationMethod(.monotone)
@@ -505,6 +508,7 @@ struct StatComparisonRow: View {
     let line: TeamStatLine
     let away: Team
     let home: Team
+    @Environment(\.colorScheme) private var scheme
 
     var body: some View {
         VStack(spacing: 4) {
@@ -519,9 +523,9 @@ struct StatComparisonRow: View {
                 let awayBetter = line.lowerIsBetter ? share < 0.5 : share > 0.5
                 GeometryReader { proxy in
                     HStack(spacing: 3) {
-                        Capsule().fill(away.primaryColor.opacity(awayBetter ? 1 : 0.4))
+                        Capsule().fill(away.color(for: scheme).opacity(awayBetter ? 1 : 0.4))
                             .frame(width: max(4, (proxy.size.width - 3) * share))
-                        Capsule().fill(home.primaryColor.opacity(awayBetter ? 0.4 : 1))
+                        Capsule().fill(home.color(for: scheme).opacity(awayBetter ? 0.4 : 1))
                     }
                 }
                 .frame(height: 6)
@@ -534,6 +538,7 @@ struct StatComparisonRow: View {
 
 struct DrivesView: View {
     let detail: GameDetail
+    @Environment(\.colorScheme) private var scheme
     @State private var expanded: Set<String> = []
 
     var body: some View {
@@ -551,7 +556,7 @@ struct DrivesView: View {
     private func driveCard(_ drive: Drive) -> some View {
         let team = [detail.game.away.team, detail.game.home.team].first { $0.id == drive.teamKey }
         let isExpanded = expanded.contains(drive.id) || drive.isCurrent
-        return GlassCard(tint: drive.isScore ? team?.primaryColor : nil) {
+        return GlassCard(tint: drive.isScore ? team?.color(for: scheme) : nil) {
             VStack(alignment: .leading, spacing: 8) {
                 Button {
                     withAnimation(.snappy) {

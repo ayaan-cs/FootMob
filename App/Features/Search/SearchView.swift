@@ -46,6 +46,7 @@ struct SearchView: View {
                 ContentUnavailableView.search(text: query)
             }
         }
+        .appBackground()
         .navigationTitle("Search")
         .searchable(text: $query, prompt: "Teams, games")
         .task {

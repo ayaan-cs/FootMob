@@ -30,6 +30,7 @@ A FotMob-style matchday app for **American football**: live scores, fixtures, st
 
 - **Liquid Glass** throughout: `glassEffect`, `GlassEffectContainer`, and the `.glass` / `.glassProminent` button styles.
 - The tab bar **minimizes when you scroll down**. There's a separate **Search tab**, and a **bottom accessory** shows the live game above the tab bar.
+- **Dark mode**: a System / Light / Dark choice in **Following → Settings**. Dark mode uses a deep navy-black background taken from the app icon. Team colours adjust automatically, so near-black colours like the Cowboys' navy switch to the team's alternate colour instead of disappearing.
 - `MeshGradient` team-colour headers, SF Symbol animations, numeric score transitions, and haptics when a team scores.
 - Widgets support the tinted and clear Home Screen styles (`widgetAccentable`, accented rendering modes).
 - Interactive widgets, controls and Live Activities are all driven by **App Intents**.
@@ -126,7 +127,7 @@ FootMob has no accounts, ads, analytics or tracking, and it stores no secrets. T
 - the match centre, with live stats, events and the league table in context
 - clean league tables, following teams, and personalized news
 
-FotMob built all of that for football (soccer), and it's one of the best sports apps on any platform. FootMob is a fan-made tribute that applies their approach to the NFL and college football. The app has a credits screen too (**Following → ⓘ**).
+FotMob built all of that for football (soccer), and it's one of the best sports apps on any platform. FootMob is a fan-made tribute that applies their approach to the NFL and college football. The app has a credits screen too (**Following → Settings → About & Credits**).
 
 ### Download FotMob
 

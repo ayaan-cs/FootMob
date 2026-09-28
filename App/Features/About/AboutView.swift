@@ -2,7 +2,6 @@ import SwiftUI
 
 /// About, credits and legal. FootMob exists because of FotMob — this screen says so.
 struct AboutView: View {
-    @Environment(\.dismiss) private var dismiss
     @Environment(\.openURL) private var openURL
 
     /// Opens the App Store's search for FotMob.
@@ -10,24 +9,18 @@ struct AboutView: View {
     private static let fotMobWebsite = URL(string: "https://www.fotmob.com")!
 
     var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(spacing: 20) {
-                    header
-                    fotMobCredit
-                    otherCredits
-                    privacy
-                }
-                .padding()
+        ScrollView {
+            VStack(spacing: 20) {
+                header
+                fotMobCredit
+                otherCredits
+                privacy
             }
-            .navigationTitle("About")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done", systemImage: "checkmark") { dismiss() }
-                }
-            }
+            .padding()
         }
+        .appBackground()
+        .navigationTitle("About & Credits")
+        .navigationBarTitleDisplayMode(.inline)
     }
 
     private var header: some View {
@@ -123,5 +116,5 @@ struct AboutView: View {
 }
 
 #Preview {
-    AboutView()
+    NavigationStack { AboutView() }
 }

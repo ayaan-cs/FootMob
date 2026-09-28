@@ -116,6 +116,7 @@ struct ScoresView: View {
             .padding(.horizontal)
             .padding(.bottom, 24)
         }
+        .appBackground()
         .navigationTitle("Matches")
         .toolbar {
             ToolbarItem(placement: .principal) {

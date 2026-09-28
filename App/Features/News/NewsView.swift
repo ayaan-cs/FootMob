@@ -70,6 +70,7 @@ struct NewsView: View {
             }
             .padding()
         }
+        .appBackground()
         .navigationTitle("News")
         .task { if viewModel.articles.isEmpty { await viewModel.load(using: model) } }
         .refreshable { await viewModel.load(using: model) }

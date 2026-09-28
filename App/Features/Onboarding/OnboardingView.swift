@@ -56,7 +56,7 @@ struct OnboardingView: View {
             .padding(20)
             .glassEffect(.regular, in: .rect(cornerRadius: 24))
             .padding(.horizontal, 24)
-            Text("Inspired by FotMob, the football app we love. Find credits in Following → ⓘ.")
+            Text("Inspired by FotMob, the football app we love. Credits are in Following → Settings.")
                 .font(.caption)
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.white.opacity(0.7))

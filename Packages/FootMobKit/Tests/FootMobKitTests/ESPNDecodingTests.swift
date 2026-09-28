@@ -118,3 +118,20 @@ struct InputValidationTests {
         #expect(InputValidation.imageURL("https://notespncdn.com/logo.png") == nil)
     }
 }
+
+@Suite("Team color contrast")
+struct TeamColorContrastTests {
+    @Test func luminanceBounds() {
+        #expect(TeamColorContrast.luminance(hex: "000000") == 0)
+        #expect(TeamColorContrast.luminance(hex: "#FFFFFF") == 1)
+        #expect(TeamColorContrast.luminance(hex: "nope") == nil)
+    }
+
+    @Test func darkTeamColorsNeedAdjustingInDarkMode() throws {
+        // Cowboys navy is too dark for a dark background; Chiefs red is fine.
+        let cowboys = try #require(TeamColorContrast.luminance(hex: SampleData.cowboys.colorHex))
+        let chiefs = try #require(TeamColorContrast.luminance(hex: SampleData.chiefs.colorHex))
+        #expect(cowboys < TeamColorContrast.minimumOnDark)
+        #expect(chiefs >= TeamColorContrast.minimumOnDark)
+    }
+}
