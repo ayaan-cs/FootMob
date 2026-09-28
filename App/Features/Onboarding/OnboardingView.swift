@@ -7,7 +7,8 @@ struct OnboardingView: View {
 
     var body: some View {
         ZStack {
-            TeamMeshBackground(leading: .blue, trailing: .orange).ignoresSafeArea()
+            TeamMeshBackground(leading: Color(red: 0.01, green: 0.15, blue: 0.31), trailing: Color(red: 0.66, green: 0.07, blue: 0.16))
+                .ignoresSafeArea()
 
             VStack(spacing: 24) {
                 if step == 0 {
@@ -34,12 +35,13 @@ struct OnboardingView: View {
     private var welcome: some View {
         VStack(spacing: 20) {
             Spacer()
-            Image(systemName: "football.fill")
-                .font(.system(size: 72))
-                .foregroundStyle(.white)
+            Image("AppLogo")
+                .resizable()
+                .scaledToFit()
                 .frame(width: 140, height: 140)
-                .glassEffect(.regular.tint(.white.opacity(0.1)), in: .circle)
-                .symbolEffect(.bounce, options: .nonRepeating)
+                .clipShape(.rect(cornerRadius: 32))
+                .shadow(color: .black.opacity(0.4), radius: 16, y: 8)
+                .accessibilityHidden(true)
             Text("FootMob").font(.largeTitle.bold()).foregroundStyle(.white)
             Text("Live scores, stats, tables and news for the NFL and college football.")
                 .multilineTextAlignment(.center)
@@ -54,6 +56,11 @@ struct OnboardingView: View {
             .padding(20)
             .glassEffect(.regular, in: .rect(cornerRadius: 24))
             .padding(.horizontal, 24)
+            Text("Inspired by FotMob, the football app we love. Find credits in Following → ⓘ.")
+                .font(.caption)
+                .multilineTextAlignment(.center)
+                .foregroundStyle(.white.opacity(0.7))
+                .padding(.horizontal, 32)
             Spacer()
             Button {
                 step = 1

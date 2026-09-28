@@ -63,7 +63,8 @@ public enum SnapshotStore {
 
     public static func write<T: Encodable>(_ value: T, as name: Name) {
         guard let data = try? JSONEncoder().encode(value) else { return }
-        try? data.write(to: url(name), options: .atomic)
+        // Readable by widgets on the Lock Screen after first unlock, encrypted before that.
+        try? data.write(to: url(name), options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])
     }
 
     public static func read<T: Decodable>(_ type: T.Type, _ name: Name) -> T? {
@@ -125,15 +126,18 @@ public enum DeepLink: Hashable, Sendable {
         case "live": self = .live
         case "news": self = .news
         case "game":
-            guard parts.count == 2, let league = League(rawValue: parts[0]) else { return nil }
+            guard parts.count == 2, let league = League(rawValue: parts[0]),
+                  InputValidation.isValidIdentifier(parts[1]) else { return nil }
             self = .game(league, parts[1])
         case "team":
-            guard parts.count == 2, let league = League(rawValue: parts[0]) else { return nil }
+            guard parts.count == 2, let league = League(rawValue: parts[0]),
+                  InputValidation.isValidIdentifier(parts[1]) else { return nil }
             self = .team(league, parts[1])
         case "article":
             let value = URLComponents(url: url, resolvingAgainstBaseURL: false)?
                 .queryItems?.first { $0.name == "url" }?.value
-            guard let value, let target = URL(string: value) else { return nil }
+            // Any app or web page can open a footmob:// link, so only trusted news hosts are allowed.
+            guard let value, let target = URL(string: value), InputValidation.isTrustedArticle(target) else { return nil }
             self = .article(target)
         default:
             return nil

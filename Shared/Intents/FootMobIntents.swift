@@ -48,7 +48,8 @@ struct TeamEntity: AppEntity {
     /// Splits `nfl:6` back into its league and ESPN ID.
     var parsed: (league: League, espnID: String)? {
         let parts = id.split(separator: ":", maxSplits: 1).map(String.init)
-        guard parts.count == 2, let league = League(rawValue: parts[0]) else { return nil }
+        guard parts.count == 2, let league = League(rawValue: parts[0]),
+              InputValidation.isValidIdentifier(parts[1]) else { return nil }
         return (league, parts[1])
     }
 }
@@ -153,7 +154,9 @@ struct StartGameLiveActivityIntent: LiveActivityIntent {
     }
 
     func perform() async throws -> some IntentResult {
-        guard let league = League(rawValue: league) else { return .result() }
+        guard let league = League(rawValue: league), InputValidation.isValidIdentifier(gameID) else {
+            return .result()
+        }
         if GameActivityController.trackedGameIDs.contains(gameID) {
             await GameActivityController.end(gameID: gameID)
         } else {

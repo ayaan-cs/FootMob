@@ -1,5 +1,5 @@
 import SwiftUI
-import WebKit
+import SafariServices
 import FootMobKit
 
 enum NewsFeed: String, CaseIterable, Identifiable {
@@ -155,26 +155,34 @@ struct ArticleRow: View {
     }
 }
 
-/// In-app reader using the SwiftUI-native WebView (iOS 26).
+/// In-app reader built on `SFSafariViewController`.
+///
+/// Third-party pages run in Safari's own sandboxed process: FootMob can't read or inject into
+/// them, they don't share cookies with the app, and Safari's fraud warnings and content
+/// blockers still apply. Non-HTTPS links are refused.
 struct ArticleReaderView: View {
     let url: URL
-    @Environment(\.dismiss) private var dismiss
-    @Environment(\.openURL) private var openURL
 
     var body: some View {
-        NavigationStack {
-            WebView(url: url)
-                .ignoresSafeArea(edges: .bottom)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button("Close", systemImage: "xmark") { dismiss() }
-                    }
-                    ToolbarItemGroup(placement: .primaryAction) {
-                        ShareLink(item: url)
-                        Button("Open in Safari", systemImage: "safari") { openURL(url) }
-                    }
-                }
+        if url.scheme?.lowercased() == "https" {
+            SafariView(url: url).ignoresSafeArea()
+        } else {
+            ContentUnavailableView("Can't open this link", systemImage: "lock.slash",
+                                   description: Text("FootMob only opens secure (HTTPS) pages."))
         }
     }
+}
+
+private struct SafariView: UIViewControllerRepresentable {
+    let url: URL
+
+    func makeUIViewController(context: Context) -> SFSafariViewController {
+        let configuration = SFSafariViewController.Configuration()
+        configuration.entersReaderIfAvailable = true
+        let controller = SFSafariViewController(url: url, configuration: configuration)
+        controller.dismissButtonStyle = .close
+        return controller
+    }
+
+    func updateUIViewController(_ controller: SFSafariViewController, context: Context) {}
 }

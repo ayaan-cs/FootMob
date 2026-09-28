@@ -4,6 +4,7 @@ import FootMobKit
 struct FollowingView: View {
     @Environment(AppModel.self) private var model
     @State private var showingPicker = false
+    @State private var showingAbout = false
 
     private let columns = [GridItem(.adaptive(minimum: 150), spacing: 12)]
 
@@ -39,10 +40,18 @@ struct FollowingView: View {
         }
         .navigationTitle("Following")
         .toolbar {
-            Button("Edit Teams", systemImage: "plus") { showingPicker = true }
+            ToolbarItem(placement: .topBarLeading) {
+                Button("About & Credits", systemImage: "info.circle") { showingAbout = true }
+            }
+            ToolbarItem(placement: .topBarTrailing) {
+                Button("Edit Teams", systemImage: "plus") { showingPicker = true }
+            }
         }
         .sheet(isPresented: $showingPicker) {
             TeamPickerView()
+        }
+        .sheet(isPresented: $showingAbout) {
+            AboutView()
         }
     }
 }

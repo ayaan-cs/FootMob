@@ -16,7 +16,7 @@ extension ESPNTeam {
             nickname: nickname ?? name ?? "",
             colorHex: color,
             alternateColorHex: alternateColor,
-            logoURL: logo.flatMap(URL.init(string:))
+            logoURL: InputValidation.imageURL(logo)
         )
     }
 }
@@ -266,7 +266,7 @@ extension ESPNSummary {
                     name: top.athlete?.displayName ?? "",
                     shortName: top.athlete?.shortName ?? top.athlete?.displayName ?? "",
                     position: top.athlete?.position?.abbreviation,
-                    headshotURL: top.athlete?.headshot?.href.flatMap(URL.init(string:)),
+                    headshotURL: InputValidation.imageURL(top.athlete?.headshot?.href),
                     statLine: top.displayValue ?? ""
                 )
                 if categories[key] == nil {
@@ -290,14 +290,14 @@ extension ESPNArticle {
             guard category.type == "team" else { return nil }
             return category.teamId?.value ?? category.team?.id?.value
         }
-        let url = links?.web?.href.flatMap(URL.init(string:))
+        let url = InputValidation.webURL(links?.web?.href)
         return Article(
             id: id?.value ?? url?.absoluteString ?? headline,
             league: league,
             headline: headline,
             summary: description ?? "",
             published: ESPNDate.parse(published),
-            imageURL: images?.values.first?.url.flatMap(URL.init(string:)),
+            imageURL: InputValidation.imageURL(images?.values.first?.url),
             url: url,
             byline: byline,
             teamIDs: Array(Set(teamIDs)).sorted()

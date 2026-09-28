@@ -53,6 +53,10 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         FootMobAppGroup: $(APP_GROUP_ID)
         LSApplicationCategoryType: public.app-category.sports
+        ITSAppUsesNonExemptEncryption: false
+        # HTTPS only. No exceptions: every endpoint FootMob talks to supports modern TLS.
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: false
         UILaunchScreen: {}
         UIApplicationSceneManifest:
           UIApplicationSupportsMultipleScenes: false
@@ -97,6 +101,8 @@ targets:
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         FootMobAppGroup: $(APP_GROUP_ID)
         NSSupportsLiveActivities: true
+        NSAppTransportSecurity:
+          NSAllowsArbitraryLoads: false
         NSExtension:
           NSExtensionPointIdentifier: com.apple.widgetkit-extension
     settings:

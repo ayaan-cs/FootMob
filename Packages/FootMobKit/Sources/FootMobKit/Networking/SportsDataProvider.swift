@@ -48,11 +48,15 @@ public struct WeekSelection: Codable, Hashable, Sendable, Identifiable {
 public enum SportsDataError: Error, LocalizedError {
     case badResponse(Int)
     case notFound
+    case invalidInput
+    case responseTooLarge
 
     public var errorDescription: String? {
         switch self {
         case .badResponse(let code): "The scores service returned an error (\(code))."
         case .notFound: "That game couldn't be found."
+        case .invalidInput: "That link isn't valid."
+        case .responseTooLarge: "The scores service sent an unexpected response."
         }
     }
 }

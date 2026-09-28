@@ -1,4 +1,8 @@
+<p align="center"><img src="App/Assets.xcassets/AppLogo.imageset/AppLogo.png" width="160" alt="FootMob app icon"></p>
+
 # FootMob 🏈
+
+> **Credit where it's due: this app is built on FotMob's idea.** See [Credits & inspiration](#credits--inspiration).
 
 A FotMob-style matchday app for **American football**: live scores, fixtures, standings, match stats and personalized news for the **NFL** and **college football (FBS)**. It's built for **iOS 26** and runs on your iPhone for **$0**.
 
@@ -8,7 +12,7 @@ A FotMob-style matchday app for **American football**: live scores, fixtures, st
 | **Match centre** | Team-colour hero header, live field-position graphic with down & distance, quarter-by-quarter linescore, win-probability chart, scoring summary, game leaders, team stat comparison bars, drive-by-drive play-by-play, and the division/conference table. |
 | **Leagues** | NFL division tables and FBS conference tables (seeds, clinch markers, PCT, point differential, streak), plus this week's schedule and league news. |
 | **Following** | Glass tiles for your teams showing their live, next or last game. Each team page has its schedule and news. |
-| **News** | A "For You" feed ranked by your teams and how recent each story is, with an **on-device AI briefing** (Apple Foundation Models) and an in-app reader. |
+| **News** | A "For You" feed ranked by your teams and how recent each story is, with an **on-device AI briefing** (Apple Foundation Models) and a secure in-app reader (Safari's viewer). |
 | **Search** | Teams across both leagues and this week's games. |
 
 ### Home Screen, Lock Screen and system features
@@ -29,7 +33,7 @@ A FotMob-style matchday app for **American football**: live scores, fixtures, st
 - `MeshGradient` team-colour headers, SF Symbol animations, numeric score transitions, and haptics when a team scores.
 - Widgets support the tinted and clear Home Screen styles (`widgetAccentable`, accented rendering modes).
 - Interactive widgets, controls and Live Activities are all driven by **App Intents**.
-- An on-device LLM (**Foundation Models**) writes the news briefing, and the native SwiftUI **`WebView`** is the article reader.
+- An on-device LLM (**Foundation Models**) writes the news briefing.
 
 ---
 
@@ -102,6 +106,41 @@ App/                        SwiftUI app (Matches, Match centre, Leagues, Followi
 Shared/Intents/             App Intents shared by app & widgets (config, Go Live, controls)
 Widgets/                    Scores, My Team, Top Stories widgets, Live Activity, Controls
 ```
+
+## Security & privacy
+
+FootMob has no accounts, ads, analytics or tracking, and it stores no secrets. There are no API keys in the code to leak. The protections below are built in; [SECURITY.md](SECURITY.md) has the full list and how to report a problem.
+
+- **HTTPS only.** App Transport Security has no exceptions. Requests use a stateless session: no cookies, no credential storage, no disk cache, TLS 1.2 or newer, strict timeouts and a size cap on every response.
+- **Untrusted input is validated.** Anything that arrives from outside can be hostile: `footmob://` deep links, widget, Siri and Control Center parameters, and URLs inside API responses. IDs must be short alphanumerics, which blocks path traversal and URL injection. Images load only from ESPN's HTTPS image hosts. Article deep links must point at ESPN.
+- **Web pages are sandboxed.** Articles open in `SFSafariViewController`, which runs in Safari's own process. FootMob can't read or change those pages, they don't share cookies with the app, and Safari's fraud warnings still apply.
+- **Files are encrypted at rest.** Cached scores, news and images use iOS file protection (*complete until first unlock*).
+- **Privacy manifests** declare no tracking and no collected data for both the app and the widgets.
+- **The AI briefing never runs code.** Headlines go to the on-device model as plain text, and its answer is shown as plain text, so a hostile headline can't trigger links or actions.
+
+## Credits & inspiration
+
+**FootMob exists because of [FotMob](https://www.fotmob.com).** The idea and most of the execution are theirs:
+
+- the matchday-first layout, with your teams' games at the top
+- the match centre, with live stats, events and the league table in context
+- clean league tables, following teams, and personalized news
+
+FotMob built all of that for football (soccer), and it's one of the best sports apps on any platform. FootMob is a fan-made tribute that applies their approach to the NFL and college football. The app has a credits screen too (**Following → ⓘ**).
+
+### ⚽ Download FotMob
+
+If you watch soccer at all, get the real thing. It's free:
+
+- **iPhone / iPad:** [search "FotMob" on the App Store](https://apps.apple.com/us/search?term=fotmob)
+- **Android:** [FotMob on Google Play](https://play.google.com/store/apps/details?id=com.mobilefootie.wc2010)
+- **Web:** [fotmob.com](https://www.fotmob.com)
+
+*FootMob is an independent, non-commercial project. It is not affiliated with, endorsed by or sponsored by FotMob. FotMob is a trademark of its owner.*
+
+**Also thanks to:**
+- **ESPN** for the public score, stats and news data (FootMob isn't affiliated with ESPN).
+- **The NFL, the NCAA, and their clubs and schools.** Team names, logos and league marks belong to them.
 
 ## Using a different data source
 

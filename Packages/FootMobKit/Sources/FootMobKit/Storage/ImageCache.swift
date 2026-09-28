@@ -15,8 +15,9 @@ public actor ImageCache {
     public static let shared = ImageCache()
 
     private let session: URLSession
+    private static let maxDownloadBytes = 5 * 1_024 * 1_024
 
-    public init(session: URLSession = .shared) {
+    public init(session: URLSession = ESPNClient.sharedSession) {
         self.session = session
     }
 
@@ -31,14 +32,18 @@ public actor ImageCache {
     /// Ensures every URL is cached locally. Failures are ignored; views fall back to monograms.
     public func prefetch(_ urls: [URL], maxPixel: Int = 120) async {
         let missing = Set(urls).filter {
+            InputValidation.isTrusted($0, hosts: InputValidation.trustedImageHosts) &&
             !FileManager.default.fileExists(atPath: Self.fileURL(for: $0, maxPixel: maxPixel).path)
         }
         await withTaskGroup(of: Void.self) { group in
             for url in missing {
                 group.addTask { [session] in
-                    guard let (data, _) = try? await session.data(from: url),
-                          let png = Self.downsample(data, maxPixel: maxPixel) else { return }
-                    try? png.write(to: Self.fileURL(for: url, maxPixel: maxPixel), options: .atomic)
+                    guard let result = try? await session.data(from: url),
+                          (result.1 as? HTTPURLResponse)?.statusCode == 200,
+                          result.0.count <= Self.maxDownloadBytes,
+                          let png = Self.downsample(result.0, maxPixel: maxPixel) else { return }
+                    try? png.write(to: Self.fileURL(for: url, maxPixel: maxPixel),
+                                   options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])
                 }
             }
         }

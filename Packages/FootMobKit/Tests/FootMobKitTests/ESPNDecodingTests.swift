@@ -90,3 +90,31 @@ struct PersonalizationTests {
         #expect(ranked.first?.id == "a2")
     }
 }
+
+@Suite("Input validation")
+struct InputValidationTests {
+    @Test(arguments: ["401773001", "12", "abcXYZ9"])
+    func acceptsIdentifiers(id: String) {
+        #expect(InputValidation.isValidIdentifier(id))
+    }
+
+    @Test(arguments: ["", "../teams", "12?x=1", "12/schedule", "１２", String(repeating: "1", count: 25)])
+    func rejectsIdentifiers(id: String) {
+        #expect(!InputValidation.isValidIdentifier(id))
+    }
+
+    @Test func deepLinksRejectHostileInput() {
+        #expect(DeepLink(url: URL(string: "footmob://team/nfl/..%2F..%2Fadmin")!) == nil)
+        #expect(DeepLink(url: URL(string: "footmob://game/mlb/401")!) == nil)
+        #expect(DeepLink(url: URL(string: "footmob://article?url=https%3A%2F%2Fevil.example%2F")!) == nil)
+        #expect(DeepLink(url: URL(string: "footmob://article?url=http%3A%2F%2Fwww.espn.com%2F")!) == nil)
+        #expect(DeepLink(url: URL(string: "footmob://article?url=https%3A%2F%2Fwww.espn.com.evil.example%2F")!) == nil)
+    }
+
+    @Test func imageHostsAreAllowlisted() {
+        #expect(InputValidation.imageURL("https://a.espncdn.com/i/teamlogos/nfl/500/kc.png") != nil)
+        #expect(InputValidation.imageURL("http://a.espncdn.com/logo.png") == nil)
+        #expect(InputValidation.imageURL("https://tracker.example/pixel.png") == nil)
+        #expect(InputValidation.imageURL("https://notespncdn.com/logo.png") == nil)
+    }
+}
