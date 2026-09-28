@@ -1,6 +1,6 @@
 <p align="center"><img src="App/Assets.xcassets/AppLogo.imageset/AppLogo.png" width="160" alt="FootMob app icon"></p>
 
-# FootMob 🏈
+# FootMob
 
 > **Credit where it's due: this app is built on FotMob's idea.** See [Credits & inspiration](#credits--inspiration).
 
@@ -17,7 +17,7 @@ A FotMob-style matchday app for **American football**: live scores, fixtures, st
 
 ### Home Screen, Lock Screen and system features
 
-- **Scores widget** (small, medium, large, and Lock Screen circular, rectangular and inline). It shows today's games with your teams first. It has a refresh button and a 🔔 button on each game that starts a Live Activity from the widget.
+- **Scores widget** (small, medium, large, and Lock Screen circular, rectangular and inline). It shows today's games with your teams first. It has a refresh button and a button on each game that starts a Live Activity from the widget.
 - **My Team widget**: your team's live score, next kickoff or last result, with a **Go Live** button.
 - **Top Stories widget**: news headlines with thumbnails.
 - **Live Activities**: the score, clock, down & distance, a field graphic and the last play show on the Lock Screen and in the **Dynamic Island**. They also appear in StandBy, CarPlay and the Apple Watch Smart Stack. You get an alert when someone scores.
@@ -128,7 +128,7 @@ FootMob has no accounts, ads, analytics or tracking, and it stores no secrets. T
 
 FotMob built all of that for football (soccer), and it's one of the best sports apps on any platform. FootMob is a fan-made tribute that applies their approach to the NFL and college football. The app has a credits screen too (**Following → ⓘ**).
 
-### ⚽ Download FotMob
+### Download FotMob
 
 If you watch soccer at all, get the real thing. It's free:
 
