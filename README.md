@@ -1,4 +1,4 @@
-# FootMob 🏈
+# FootMob 
 
 A FotMob-style matchday app for **American football**: live scores, fixtures, standings, match stats and personalized news for the **NFL** and **college football (FBS)**. It's built for **iOS 26** and runs on your iPhone for **$0**.
 
@@ -13,7 +13,7 @@ A FotMob-style matchday app for **American football**: live scores, fixtures, st
 
 ### Home Screen, Lock Screen and system features
 
-- **Scores widget** (small, medium, large, and Lock Screen circular, rectangular and inline). It shows today's games with your teams first. It has a refresh button and a 🔔 button on each game that starts a Live Activity from the widget.
+- **Scores widget** (small, medium, large, and Lock Screen circular, rectangular and inline). It shows today's games with your teams first. It has a refresh button and a button on each game that starts a Live Activity from the widget.
 - **My Team widget**: your team's live score, next kickoff or last result, with a **Go Live** button.
 - **Top Stories widget**: news headlines with thumbnails.
 - **Live Activities**: the score, clock, down & distance, a field graphic and the last play show on the Lock Screen and in the **Dynamic Island**. They also appear in StandBy, CarPlay and the Apple Watch Smart Stack. You get an alert when someone scores.
